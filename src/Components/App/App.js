@@ -16,24 +16,30 @@ class App extends Component {
           'id' : '1'
         },
         {
-          'name' : 'TestNavn1',
-          'artist' : 'TestArtist1',
-          'album' : 'TestAlbum1',
-          'id' : '2'
-        },
-        {
           'name' : 'TestNavn2',
           'artist' : 'TestArtist2',
           'album' : 'TestAlbum2',
+          'id' : '2'
+        },
+        {
+          'name' : 'TestNavn3',
+          'artist' : 'TestArtist3',
+          'album' : 'TestAlbum3',
           'id' : '3'
+        },
+        {
+          'name' : 'TestNavn8',
+          'artist' : 'TestArtist8',
+          'album' : 'TestAlbum8',
+          'id' : '8'
         }
       ],
       playlistName:'SpilleListeNavn',
       playlistTracks:[
         {
-          'name' : 'TestNavn2',
-          'artist' : 'TestArtist2',
-          'album' : 'TestAlbum2',
+          'name' : 'TestNavn4',
+          'artist' : 'TestArtist4',
+          'album' : 'TestAlbum4',
           'id' : '4'
         },
         {
@@ -45,15 +51,34 @@ class App extends Component {
       ]
     };
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
   }
 
   addTrack(track) {
     //Sjekk om track.id allerede eksisterer i this.state.playListTracks[x].id
-    var alreadyInPlaylist = this.state.playlistTracks.filter(function(tracks){
+    let inPlaylist = this.state.playlistTracks.filter(function(tracks){
       //Filtrer playlistTracks på de tracks som har id som matcher track id
       return tracks.id == track.id;
     });
-    console.log(alreadyInPlaylist);
+    if(inPlaylist.length < 1) {
+      // legg track til på slutten av playListTracks
+      let playListTracks = this.state.playlistTracks.push(track);
+      // sett playListTracks på nytt
+      this.setState({playlistTracks : playListTracks});
+      console.log("Track added!");
+    }else{
+      console.log("Track already in playlist");
+    };
+  }
+
+  removeTrack(track) {
+    let playListTracks = this.state.playlistTracks.filter(function(tracks){
+      //Filtrer playlistTracks på de tracks som har id som IKKE matcher track id
+      return tracks !== track;
+    });
+
+    // sett playListTracks på nytt
+    this.setState({playlistTracks : playListTracks});
   }
 
   render() {
@@ -64,8 +89,8 @@ class App extends Component {
           //Add a SearchBar component
           <div className="App-playlist">
             //Add a SearchResults component
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack({id:'5'})} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} />
           </div>
         </div>
       </div>
