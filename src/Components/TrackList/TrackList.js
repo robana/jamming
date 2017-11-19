@@ -12,7 +12,7 @@ class TrackList extends React.Component {
                   track={track}
                   isRemoval={this.props.isRemoval}
                   onAdd={this.props.onAdd}
-                  onRemove={this.props.removeTrack}
+                  onRemove={this.props.onRemove}
                   />
                  }
                )}

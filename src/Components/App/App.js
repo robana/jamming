@@ -8,6 +8,8 @@ import TrackList from '../../Components/TrackList/TrackList';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
     this.state = {searchResults:[
         {
           'name' : 'TestNavn',
@@ -50,8 +52,6 @@ class App extends Component {
         }
       ]
     };
-    this.addTrack = this.addTrack.bind(this);
-    this.removeTrack = this.removeTrack.bind(this);
   }
 
   addTrack(track) {
